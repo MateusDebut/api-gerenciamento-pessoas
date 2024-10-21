@@ -69,5 +69,5 @@ def create_user():
     finally:
         connection.close()
 
-if __name__ == '__main__':
-    app.run(debug=True)
+def lambda_handler(event, context):
+    return app(event, context)
