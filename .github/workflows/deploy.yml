@@ -28,13 +28,15 @@ jobs:
         mkdir -p package
         cp -r * package/
         pip install -r requirements.txt --target package/
+        cd package
+        zip -r ../lambda_function.zip .
 
     - name: Deploy to AWS Lambda
-      uses: aws-actions/aws-lambda-deploy@v1
-      with:
-        function-name: flask-api
-        aws-region: us-east-1
-        zip-file: package.zip
+      run: |
+        aws lambda update-function-code \
+          --function-name flask-api \
+          --zip-file fileb://lambda_function.zip \
+          --region us-east-1
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
