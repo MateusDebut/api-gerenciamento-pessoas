@@ -23,11 +23,14 @@ jobs:
         python -m pip install --upgrade pip
         pip install flask boto3 pymysql
 
+    - name: List files in the current directory
+      run: ls -al
+
     - name: Package the application
       run: |
         mkdir -p package
-        cp lambda_function.py package/
-        cp requirements.txt package/
+        cp app/lambda_function.py package/        # Ajuste aqui para o caminho correto
+        cp app/requirements.txt package/           # Ajuste aqui se requirements.txt também estiver na pasta app
         cd package
         pip install -r requirements.txt --target .
         zip -r ../lambda_function.zip .
