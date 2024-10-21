@@ -70,4 +70,5 @@ def create_user():
         connection.close()
 
 def lambda_handler(event, context):
+    print("Received event:", event)
     return handler(event, context)
