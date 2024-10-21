@@ -1,10 +1,10 @@
 from flask import Flask, request, jsonify
 import boto3
 import pymysql
-import os
-import json
+from mangum import Mangum
 
 app = Flask(__name__)
+handler = Mangum(app)
 
 def get_db_credentials():
     """Retrieve the database credentials from AWS Secrets Manager"""
@@ -70,4 +70,4 @@ def create_user():
         connection.close()
 
 def lambda_handler(event, context):
-    return app(event, context)
+    return handler(event, context)
