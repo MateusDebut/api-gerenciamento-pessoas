@@ -26,9 +26,10 @@ jobs:
     - name: Package the application
       run: |
         mkdir -p package
-        cp -r * package/
-        pip install -r requirements.txt --target package/
+        cp lambda_function.py package/
+        cp requirements.txt package/
         cd package
+        pip install -r requirements.txt --target .
         zip -r ../lambda_function.zip .
 
     - name: Deploy to AWS Lambda
